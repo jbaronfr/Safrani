@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25928.0
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safran.Scoring", "Safran.Scoring\Safran.Scoring.csproj", "{018C6904-C914-4E6E-B7D0-EA6EE53E9B1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Safran.Scoring.CLI", "Safran.Scoring\Safran.Scoring.CLI.csproj", "{018C6904-C914-4E6E-B7D0-EA6EE53E9B1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Safran.Scoring.Model", "Safran.Scoring.Model\Safran.Scoring.Model.csproj", "{ABF4876F-E0E3-4C0D-8AC7-49AFBF9BAB2F}"
 EndProject

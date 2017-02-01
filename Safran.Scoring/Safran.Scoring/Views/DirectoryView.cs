@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Safran.Scoring.Views
+namespace Safran.Scoring.CLI.Views
 {
     public static class DirectoryView
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Safran.Scoring
+namespace Safran.Scoring.CLI
 {
     public static class Strings
     {

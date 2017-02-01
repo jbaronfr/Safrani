@@ -1,6 +1,6 @@
 ﻿using Safran.Scoring.Business;
 using Safran.Scoring.Model;
-using Safran.Scoring.Views;
+using Safran.Scoring.CLI.Views;
 using System;
 
 class Program
@@ -16,6 +16,8 @@ class Program
         RegistrationView.GetForm();
 
         DirectoryView.DetailledList();
+
+        TableView.Display(Calculation.ComputeBestTable());
 
         Console.ReadLine();
     }
