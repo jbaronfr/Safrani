@@ -1,10 +1,7 @@
-﻿using Safran.Scoring.Data;
-using Safran.Scoring.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Safrani.Data;
+using Safrani.Model;
 
-namespace Safran.Scoring.Business
+namespace Safrani.Scoring
 {
     public static class Registration
     {
@@ -12,7 +9,7 @@ namespace Safran.Scoring.Business
         {
             bool sameName = People.Exists(pirate.Name);
 
-            if(!sameName)
+            if (!sameName)
             {
                 People.AddPerson(pirate);
                 return true;

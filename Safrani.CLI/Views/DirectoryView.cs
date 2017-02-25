@@ -1,16 +1,15 @@
-﻿using Safran.Scoring.Business;
-using Safran.Scoring.Model;
+﻿using Safrani.Model;
+using Safrani.Scoring;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Safran.Scoring.CLI.Views
+namespace Safrani.CLI.Views
 {
     public static class DirectoryView
     {
-        public static void SimpleList()
+        public static void SimpleList(List<Person> plst)
         {
-            foreach (var p in Directory.GetList())
+            foreach (var p in plst)
                 Console.WriteLine(p.Id + " - " + p.Name + (p.IsGuest ? "" : " (Host)"));
         }
 

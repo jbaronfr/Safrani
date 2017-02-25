@@ -1,9 +1,7 @@
-﻿using Safran.Scoring.Model;
-using System;
+﻿using Safrani.Model;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Safran.Scoring.Data
+namespace Safrani.Data
 {
     public static class People
     {
@@ -16,7 +14,7 @@ namespace Safran.Scoring.Data
             pList.Add(p);
             nextId++;
             foreach (var r in p.Relations)
-                r.Key.Relations.Add(p,r.Value);
+                r.Key.Relations.Add(p, r.Value);
         }
 
         public static bool Exists(string name)

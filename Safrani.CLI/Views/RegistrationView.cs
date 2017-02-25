@@ -1,10 +1,10 @@
-﻿using Safran.Scoring.Business;
-using Safran.Scoring.Model;
+﻿using Safrani.Model;
+using Safrani.Scoring;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Safran.Scoring.CLI.Views
+namespace Safrani.CLI.Views
 {
     public static class RegistrationView
     {
@@ -42,20 +42,37 @@ namespace Safran.Scoring.CLI.Views
                 foreach (var rtype in Strings.Relations)
                     Console.WriteLine(rtype.Key + " - " + rtype.Value);
                 Console.WriteLine("OK, add some relations ? ('end' to finish):");
-                string pid = ""; int relid = -1;
+                int pid, relid;
+                string spid, srelid;
                 do
                 {
-                    DirectoryView.SimpleList();
+                    var relations = p.Relations;
+                    var others = new List<Person>(peopleList);
+                    others.RemoveAll(pers => relations.ContainsKey(pers));
+                    DirectoryView.SimpleList(others);
 
-                    Console.WriteLine("Enter Person Id :");
-                    pid = Console.ReadLine();
-                    if (pid == "end") break;
+                    do
+                    {
+                        Console.WriteLine("Enter Person Id :");
+                        spid = Console.ReadLine();
+                    }
+                    while (!int.TryParse(spid, out pid) && spid != "end");
+                    if (spid == "end") break;
 
-                    Console.WriteLine("Enter Relation Id :");
-                    int.TryParse(Console.ReadLine(), out relid) ;
-                    p.Relations.Add(Directory.GetById(pid), Strings.Relations[relid]);
+                    do
+                    {
+                        Console.WriteLine("Enter Relation Id :");
+                        srelid = Console.ReadLine();
+                    }
+                    while (!int.TryParse(srelid, out relid) && srelid != "end");
+                    if (srelid == "end") break;
 
-                } while (pid != "end");
+                    if (Directory.GetList().Exists(pers => pers.Id == pid))
+                        p.Relations.Add(Directory.GetById(pid), Strings.Relations[relid]);
+                    else
+                        continue;
+
+                } while (spid != "end" && srelid != "end" && p.Relations.Count < Directory.GetList().Count);
             }
 
         }

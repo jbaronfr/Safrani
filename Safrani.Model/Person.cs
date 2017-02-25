@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Safran.Scoring.Model
+namespace Safrani.Model
 {
     public enum Relation { Soulmate, Friend, Relative, Enemy, Acquaintance, Unknown }
     public class Person

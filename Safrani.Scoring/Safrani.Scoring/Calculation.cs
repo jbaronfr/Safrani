@@ -1,11 +1,10 @@
-﻿using Safran.Scoring.Data;
-using Safran.Scoring.Model;
+﻿using Safrani.Data;
+using Safrani.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
-namespace Safran.Scoring.Business
+namespace Safrani.Scoring
 {
     public static class Calculation
     {
@@ -16,13 +15,13 @@ namespace Safran.Scoring.Business
 
             List<Tuple<Table, int>> scores = new List<Tuple<Table, int>>();
 
-            foreach(Person pirate in pirates)
+            foreach (Person pirate in pirates)
             {
                 var list = new List<Person>();
                 list.AddRange(pirates);
                 list.Remove(pirate);
                 var table = new Table();
-                table.FacingPirates.Add(new Dictionary<Side, Person> { { Side.Bow, pirate} });
+                table.FacingPirates.Add(new Dictionary<Side, Person> { { Side.Bow, pirate } });
                 scores.Add(Calculate(table, 0, list));
             }
 
@@ -40,7 +39,7 @@ namespace Safran.Scoring.Business
 
             aTable.AddNewPirateLine();
 
-            if(people.Count == 1)
+            if (people.Count == 1)
             {
                 aTable.AddPirateAtEnd(Side.Stern, people.LastOrDefault());
                 score += ComputeLastScores(aTable.FacingPirates.LastOrDefault(), previousLine);
@@ -49,16 +48,16 @@ namespace Safran.Scoring.Business
 
             var peopleInLove = previousLine.Where(p => p.Value.HasSoulmate());
             // if a previous has a soulmate put next to her/him
-            if (peopleInLove.Count()>0)
+            if (peopleInLove.Count() > 0)
             {
-                foreach(var p in peopleInLove)
+                foreach (var p in peopleInLove)
                 {
                     if (p.Key == Side.Starboard && people.Contains(p.Value.GetSoulmate()))
                     {
                         aTable.AddPirateAtEnd(Side.Starboard, p.Value.GetSoulmate());
                         people.Remove(p.Value.GetSoulmate());
                     }
-                    else if(people.Contains(p.Value.GetSoulmate()))
+                    else if (people.Contains(p.Value.GetSoulmate()))
                     {
                         aTable.AddPirateAtEnd(Side.Port, p.Value.GetSoulmate());
                         people.Remove(p.Value.GetSoulmate());
@@ -68,13 +67,13 @@ namespace Safran.Scoring.Business
                 if (aTable.FacingPirates.LastOrDefault().Count > 1)
                 {
                     score += ComputeLastScores(aTable.FacingPirates.LastOrDefault(), previousLine);
-                    return Calculate(aTable,score,people);
+                    return Calculate(aTable, score, people);
                 }
             }
 
             List<Person> peopleSelect = null;
 
-            foreach(var p in previousLine)
+            foreach (var p in previousLine)
             {
                 if (peopleSelect == null)
                     peopleSelect = PickPiratesFor(p.Value, people);
@@ -88,7 +87,7 @@ namespace Safran.Scoring.Business
             else
                 pickingList = people;
 
-            if(!aTable.FacingPirates.LastOrDefault().ContainsKey(Side.Port))
+            if (!aTable.FacingPirates.LastOrDefault().ContainsKey(Side.Port))
             {
                 // find person w/ best score with people at side and diagonal
                 Person nearPirate = pickingList.OrderByDescending(pp => PreviewLastScore(pp, Side.Port, previousLine)).FirstOrDefault();
@@ -118,10 +117,10 @@ namespace Safran.Scoring.Business
             // don't return enemies to be at side
             return people.Where(other => other.GetRelationWith(p) != Relation.Enemy).ToList();
         }
-        private static int PreviewLastScore(Person p, Side s, Dictionary<Side,Person> previousLine)
+        private static int PreviewLastScore(Person p, Side s, Dictionary<Side, Person> previousLine)
         {
             int score = 0;
-            foreach(var neibourg in previousLine)
+            foreach (var neibourg in previousLine)
             {
                 if (s == neibourg.Key)
                     score += (int)Data.Scoring.ByRelation[p.GetRelationWith(neibourg.Value)][Position.Side];
@@ -130,10 +129,10 @@ namespace Safran.Scoring.Business
             }
             return score;
         }
-        private static int ComputeLastScores(Dictionary<Side,Person> lastest, Dictionary<Side, Person> previous)
+        private static int ComputeLastScores(Dictionary<Side, Person> lastest, Dictionary<Side, Person> previous)
         {
             int score = 0;
-            foreach(var l in lastest)
+            foreach (var l in lastest)
             {
                 foreach (var neibourg in previous)
                 {
@@ -143,8 +142,8 @@ namespace Safran.Scoring.Business
                         score += (int)Data.Scoring.ByRelation[l.Value.GetRelationWith(neibourg.Value)][Position.Diagonal];
                 }
             }
-            if(lastest.Count>1)
-                score += 2* (int)Data.Scoring.ByRelation[lastest.FirstOrDefault().Value.GetRelationWith(lastest.LastOrDefault().Value)][Position.Front];
+            if (lastest.Count > 1)
+                score += 2 * (int)Data.Scoring.ByRelation[lastest.FirstOrDefault().Value.GetRelationWith(lastest.LastOrDefault().Value)][Position.Front];
             return 0;
         }
     }

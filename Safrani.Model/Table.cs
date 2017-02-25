@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Safran.Scoring.Model
+namespace Safrani.Model
 {
+    public enum Side { Port, Starboard, Bow, Stern }
     public class Table
     {
-        // public Seat Bow { get; set; }
         public List<Dictionary<Side, Person>> FacingPirates = new List<Dictionary<Side, Person>>();
-        // public Seat Stern { get; set; }
 
         public void AddNewPirateLine()
         {

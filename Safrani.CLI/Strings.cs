@@ -1,9 +1,7 @@
-﻿using Safran.Scoring.Model;
-using System;
+﻿using Safrani.Model;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Safran.Scoring.CLI
+namespace Safrani.CLI
 {
     public static class Strings
     {
