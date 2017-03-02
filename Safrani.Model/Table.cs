@@ -9,6 +9,11 @@ namespace Safrani.Model
     {
         public List<Dictionary<Side, Person>> FacingPirates = new List<Dictionary<Side, Person>>();
 
+        public Table(Person p)
+        {
+            FacingPirates.Add(new Dictionary<Side, Person> { { Side.Bow, p } });
+        }
+
         public void AddNewPirateLine()
         {
             FacingPirates.Add(new Dictionary<Side, Person>());

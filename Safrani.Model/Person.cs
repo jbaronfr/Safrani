@@ -3,10 +3,12 @@ using System.Linq;
 
 namespace Safrani.Model
 {
+    public enum Gender { Woman, Man }
     public enum Relation { Soulmate, Friend, Relative, Enemy, Acquaintance, Unknown }
     public class Person
     {
         public string Name { get; set; }
+        public Gender Gender { get; set; } 
         public int Id { get; set; }
         public bool IsGuest { get; set; }
         //public bool NotAtEnds { get; set; }

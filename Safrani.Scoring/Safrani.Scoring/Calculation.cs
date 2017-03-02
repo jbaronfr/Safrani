@@ -17,11 +17,9 @@ namespace Safrani.Scoring
 
             foreach (Person pirate in pirates)
             {
-                var list = new List<Person>();
-                list.AddRange(pirates);
+                var list = new List<Person>(pirates);
                 list.Remove(pirate);
-                var table = new Table();
-                table.FacingPirates.Add(new Dictionary<Side, Person> { { Side.Bow, pirate } });
+                var table = new Table(pirate);
                 scores.Add(Calculate(table, 0, list));
             }
 
