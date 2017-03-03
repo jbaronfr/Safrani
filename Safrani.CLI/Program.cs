@@ -27,7 +27,14 @@ namespace Safrani.CLI
 
             DirectoryView.DetailledList();
 
-            TableView.Display(Calculation.ComputeBestTable());
+            var results = Calculation.ComputeTopTables();
+
+            foreach(var table in results)
+            {
+                Console.WriteLine("Score : " + table.Item2);
+                TableView.Display(table.Item1);
+                Console.WriteLine();
+            }
 
             Console.ReadLine();
         }

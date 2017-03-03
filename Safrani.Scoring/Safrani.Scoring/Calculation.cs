@@ -8,7 +8,7 @@ namespace Safrani.Scoring
 {
     public static class Calculation
     {
-        public static Table ComputeBestTable(List<Person> pirates = null, bool peopleAtEnds = true)
+        public static List<Tuple<Table, int>> ComputeTopTables(List<Person> pirates = null, bool peopleAtEnds = true, int top = 3)
         {
             if (pirates == null)
                 pirates = People.GetList();
@@ -23,9 +23,9 @@ namespace Safrani.Scoring
                 scores.Add(Calculate(table, 0, list));
             }
 
-            scores.OrderByDescending(score => score.Item2);
+            scores = scores.OrderByDescending(score => score.Item2).ToList();
 
-            return scores.FirstOrDefault().Item1;
+            return scores.Take(top).ToList();
         }
 
         private static Tuple<Table, int> Calculate(Table aTable, int score, List<Person> people)
@@ -81,14 +81,21 @@ namespace Safrani.Scoring
 
             List<Person> pickingList;
             if (peopleSelect != null && peopleSelect.Count >= (2 - aTable.FacingPirates.LastOrDefault().Count))
-                pickingList = peopleSelect;
+                pickingList = new List<Person>(peopleSelect);
             else
-                pickingList = people;
+                pickingList = new List<Person>(people);
 
             if (!aTable.FacingPirates.LastOrDefault().ContainsKey(Side.Port))
             {
                 // find person w/ best score with people at side and diagonal
-                Person nearPirate = pickingList.OrderByDescending(pp => PreviewLastScore(pp, Side.Port, previousLine)).FirstOrDefault();
+                List<Tuple<Person, int>> pickingListScores = new List<Tuple<Person, int>>();
+                foreach (var pp in pickingList)
+                    pickingListScores.Add(new Tuple<Person, int>(pp, PreviewLastScore(pp, Side.Port, previousLine)));
+                var scoreMax = pickingListScores.Max(pps => pps.Item2);
+                pickingListScores = pickingListScores.Where(pps => pps.Item2 == scoreMax).ToList();
+                // pick ones w/ less relations first -> improvement : less remaining relations
+                pickingListScores = pickingListScores.OrderBy(pp => pp.Item1.Relations.Count).ToList();
+                Person nearPirate = pickingListScores.FirstOrDefault().Item1;
                 aTable.FacingPirates.LastOrDefault().Add(Side.Port, nearPirate);
                 pickingList.Remove(nearPirate);
                 people.Remove(nearPirate);
@@ -97,7 +104,14 @@ namespace Safrani.Scoring
             if (!aTable.FacingPirates.LastOrDefault().ContainsKey(Side.Starboard))
             {
                 // find person w/ best score with people at side and diagonal
-                Person nearPirate = pickingList.OrderByDescending(pp => PreviewLastScore(pp, Side.Starboard, previousLine)).FirstOrDefault();
+                List<Tuple<Person, int>> pickingListScores = new List<Tuple<Person, int>>();
+                foreach (var pp in pickingList)
+                    pickingListScores.Add(new Tuple<Person, int>(pp, PreviewLastScore(pp, Side.Starboard, previousLine)));
+                var scoreMax = pickingListScores.Max(pps => pps.Item2);
+                pickingListScores = pickingListScores.Where(pps => pps.Item2 == scoreMax).ToList();
+                // pick ones w/ less relations first -> improvement : less remaining relations
+                pickingListScores = pickingListScores.OrderBy(pp => pp.Item1.Relations.Count).ToList();
+                Person nearPirate = pickingListScores.FirstOrDefault().Item1;
                 aTable.FacingPirates.LastOrDefault().Add(Side.Starboard, nearPirate);
                 pickingList.Remove(nearPirate);
                 people.Remove(nearPirate);
@@ -117,6 +131,7 @@ namespace Safrani.Scoring
             // don't return enemies to be at side
             return people.Where(other => other.GetRelationWith(p) != Relation.Enemy).ToList();
         }
+
         private static int PreviewLastScore(Person p, Side s, Dictionary<Side, Person> previousLine)
         {
             int score = 0;
@@ -129,6 +144,7 @@ namespace Safrani.Scoring
             }
             return score;
         }
+
         private static int ComputeLastScores(Dictionary<Side, Person> lastest, Dictionary<Side, Person> previous)
         {
             int score = 0;
@@ -143,8 +159,8 @@ namespace Safrani.Scoring
                 }
             }
             if (lastest.Count > 1)
-                score += 2 * (int)Data.Scoring.ByRelation[lastest.FirstOrDefault().Value.GetRelationWith(lastest.LastOrDefault().Value)][Position.Front];
-            return 0;
+                score += (int)Data.Scoring.ByRelation[lastest.FirstOrDefault().Value.GetRelationWith(lastest.LastOrDefault().Value)][Position.Front];
+            return score;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Safrani.Data
             { Relation.Soulmate, new Dictionary<Position, Mark> {
                     { Position.Front, Mark.Best },
                     { Position.Side, Mark.Best },
-                    { Position.Diagonal, Mark.Yeah }
+                    { Position.Diagonal, Mark.Nope }
                 }
             },
             { Relation.Enemy, new Dictionary<Position, Mark> {
@@ -21,25 +21,25 @@ namespace Safrani.Data
             { Relation.Friend, new Dictionary<Position, Mark> {
                     { Position.Front, Mark.Top },
                     { Position.Side, Mark.Top },
-                    { Position.Diagonal, Mark.Good }
+                    { Position.Diagonal, Mark.Top }
                 }
             },
             { Relation.Relative, new Dictionary<Position, Mark> {
-                    { Position.Front, Mark.Good },
-                    { Position.Side, Mark.Good },
-                    { Position.Diagonal, Mark.Good }
+                    { Position.Front, Mark.Meh },
+                    { Position.Side, Mark.Yeah },
+                    { Position.Diagonal, Mark.Yeah }
                 }
             },
             { Relation.Acquaintance, new Dictionary<Position, Mark> {
                     { Position.Front, Mark.Yeah },
                     { Position.Side, Mark.Yeah },
-                    { Position.Diagonal, Mark.Good }
+                    { Position.Diagonal, Mark.Neutral }
                 }
             },
             { Relation.Unknown, new Dictionary<Position, Mark> {
-                    { Position.Front, Mark.Neutral },
-                    { Position.Side, Mark.Neutral },
-                    { Position.Diagonal, Mark.Neutral }
+                    { Position.Front, Mark.Bad },
+                    { Position.Side, Mark.Bad },
+                    { Position.Diagonal, Mark.Meh }
                 }
             },
         };
