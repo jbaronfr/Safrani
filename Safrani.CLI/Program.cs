@@ -1,4 +1,5 @@
 ﻿using Safrani.CLI.Views;
+using Safrani.Data;
 using Safrani.Scoring;
 using System;
 
@@ -8,13 +9,21 @@ namespace Safrani.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hosts");
+            Console.WriteLine("Bienvenue ! ");
+            string state = Console.ReadLine();
 
-            RegistrationView.GetForm(forGuest: false);
+            if (state != "test")
+            {
+                Console.WriteLine("Hosts");
 
-            Console.WriteLine("Guests");
+                RegistrationView.GetForm(forGuest: false);
 
-            RegistrationView.GetForm();
+                Console.WriteLine("Guests");
+
+                RegistrationView.GetForm();
+            }
+            else
+                People.LoadTestData();
 
             DirectoryView.DetailledList();
 
