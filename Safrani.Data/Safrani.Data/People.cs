@@ -255,7 +255,7 @@ namespace Safrani.Data
             Romain.Relations.Add(Adele, Relation.Enemy);
             Romain.Relations.Add(Charly, Relation.Friend);
             Romain.Relations.Add(Celine, Relation.Acquaintance);
-            Romain.Relations.Add(Antoine, Relation.Friend);
+            Romain.Relations.Add(Antoine, Relation.Relative);
             AddPerson(Romain);
             #endregion
         }

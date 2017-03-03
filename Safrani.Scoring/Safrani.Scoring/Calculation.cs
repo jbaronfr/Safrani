@@ -90,6 +90,7 @@ namespace Safrani.Scoring
                 // find person w/ best score with people at side and diagonal
                 Person nearPirate = pickingList.OrderByDescending(pp => PreviewLastScore(pp, Side.Port, previousLine)).FirstOrDefault();
                 aTable.FacingPirates.LastOrDefault().Add(Side.Port, nearPirate);
+                pickingList.Remove(nearPirate);
                 people.Remove(nearPirate);
             }
 
@@ -98,6 +99,7 @@ namespace Safrani.Scoring
                 // find person w/ best score with people at side and diagonal
                 Person nearPirate = pickingList.OrderByDescending(pp => PreviewLastScore(pp, Side.Starboard, previousLine)).FirstOrDefault();
                 aTable.FacingPirates.LastOrDefault().Add(Side.Starboard, nearPirate);
+                pickingList.Remove(nearPirate);
                 people.Remove(nearPirate);
             }
 
