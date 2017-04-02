@@ -2,10 +2,33 @@
 
 namespace Safrani.Model
 {
-    public enum Mark { Nope = -6, Bad = -3, Meh = -1, Neutral = 0, Yeah = 1, Good = 3, Top = 6, Best = 10 }
-    public enum Position { Front, Side, Diagonal }
-    public class Score
-    {
-        public Dictionary<Position, Mark> Value = new Dictionary<Position, Mark>();
+    public partial class Mark {
+        public static Mark Nope = new Mark(-1, 6);
+        public static Mark Bad = new Mark(-1,3);
+        public static Mark Meh = new Mark(-1,1);
+        public static Mark Neutral = new Mark(0,0);
+        public static Mark Yeah = new Mark(1,1);
+        public static Mark Good = new Mark(1,3);
+        public static Mark Top = new Mark(1,6);
+        public static Mark Best = new Mark(1,10);
     }
+
+    public partial class Mark
+    {
+        public Mark(float c, uint v)
+        {
+            Measure = v;
+            Coefficient = c;
+        }
+
+        public static implicit operator int(Mark m)
+        {
+            return (int)(m.Measure * m.Coefficient);
+        }
+
+        public uint Measure { get; set; }
+        public float Coefficient { get; set; }
+    }
+
+    public enum Position { Front, Side, Diagonal }
 }
