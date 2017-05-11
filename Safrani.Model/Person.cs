@@ -8,10 +8,12 @@ namespace Safrani.Model
     public class Person
     {
         public string Name { get; set; }
-        public Gender Gender { get; set; } 
+        public Gender Gender { get; set; }
+        public int Age { get; set; }
         public int Id { get; set; }
+        public Group Group { get; set; }
         public bool IsGuest { get; set; }
-        //public bool NotAtEnds { get; set; }
+        public bool NotAtEnds { get; set; }
 
         public Dictionary<Person, Relation> Relations = new Dictionary<Person, Relation>();
 
