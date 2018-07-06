@@ -1,4 +1,6 @@
 ﻿using Safrani.Model;
+using Safrani.Model.Calculation;
+using Safrani.Model.People;
 using System.Collections.Generic;
 
 namespace Safrani.Data
@@ -12,7 +14,7 @@ namespace Safrani.Data
                     { Position.Diagonal, Mark.Nope }
                 }
             },
-            { Relation.Enemy, new Dictionary<Position, Mark> {
+            { Relation.Dislike, new Dictionary<Position, Mark> {
                     { Position.Front, Mark.Nope },
                     { Position.Side, Mark.Nope },
                     { Position.Diagonal, Mark.Nope }
@@ -31,6 +33,12 @@ namespace Safrani.Data
                 }
             },
             { Relation.Acquaintance, new Dictionary<Position, Mark> {
+                    { Position.Front, Mark.Yeah },
+                    { Position.Side, Mark.Yeah },
+                    { Position.Diagonal, Mark.Neutral }
+                }
+            },
+            { Relation.Interest, new Dictionary<Position, Mark> {
                     { Position.Front, Mark.Yeah },
                     { Position.Side, Mark.Yeah },
                     { Position.Diagonal, Mark.Neutral }

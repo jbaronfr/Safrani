@@ -9,7 +9,7 @@ namespace Safrani.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Bienvenue ! ");
+            Console.WriteLine("Bienvenue ! Entrez 'test' pour charger un jeu de test sinon validez.");
             string state = Console.ReadLine();
 
             if (state != "test")
@@ -26,6 +26,8 @@ namespace Safrani.CLI
                 People.LoadTestData();
 
             DirectoryView.DetailledList();
+
+            Console.ReadLine();
 
             var results = Calculation.ComputeTopTables();
 

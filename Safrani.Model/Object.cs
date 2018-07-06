@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Safrani.Model
 {
-    public class Group
+    public class Object : Thing
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public Thing OwnedBy { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Safrani.Data;
 using Safrani.Model;
+using Safrani.Model.Calculation;
+using Safrani.Model.People;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,21 +46,21 @@ namespace Safrani.Scoring
                 return new Tuple<Table, int>(aTable, score);
             }
 
-            var peopleInLove = previousLine.Where(p => p.Value.HasSoulmate());
+            var peopleInLove = previousLine.Where(p => p.Value.Soulmate != null);
             // if a previous has a soulmate put next to her/him
             if (peopleInLove.Count() > 0)
             {
                 foreach (var p in peopleInLove)
                 {
-                    if (p.Key == Side.Starboard && people.Contains(p.Value.GetSoulmate()))
+                    if (p.Key == Side.Starboard && people.Contains(p.Value.Soulmate))
                     {
-                        aTable.AddPirateAtEnd(Side.Starboard, p.Value.GetSoulmate());
-                        people.Remove(p.Value.GetSoulmate());
+                        aTable.AddPirateAtEnd(Side.Starboard, p.Value.Soulmate);
+                        people.Remove(p.Value.Soulmate);
                     }
-                    else if (people.Contains(p.Value.GetSoulmate()))
+                    else if (people.Contains(p.Value.Soulmate))
                     {
-                        aTable.AddPirateAtEnd(Side.Port, p.Value.GetSoulmate());
-                        people.Remove(p.Value.GetSoulmate());
+                        aTable.AddPirateAtEnd(Side.Port, p.Value.Soulmate);
+                        people.Remove(p.Value.Soulmate);
                     }
                 }
                 // if both had soulmates -> next
@@ -109,11 +111,11 @@ namespace Safrani.Scoring
         private static List<Person> PickPiratesFor(Person p, List<Person> people)
         {
             // if soulmate in list return her/him
-            if (p.HasSoulmate() && people.Contains(p.GetSoulmate()))
-                return new List<Person> { p.GetSoulmate() };
+            if (people.Contains(p.Soulmate))
+                return new List<Person> { p.Soulmate };
 
             // don't return enemies to be at side
-            return people.Where(other => other.GetRelationWith(p) != Relation.Enemy).ToList();
+            return people.Where(other => other.GetRelationWith(p) != Relation.Dislike).ToList();
         }
 
         private static int PreviewLastScore(Person p, Side s, Dictionary<Side, Person> previousLine)
@@ -136,8 +138,8 @@ namespace Safrani.Scoring
                 pickingListScores.Add(new Tuple<Person, int>(pp, PreviewLastScore(pp, side, previousLine)));
             var scoreMax = pickingListScores.Max(pps => pps.Item2);
             pickingListScores = pickingListScores.Where(pps => pps.Item2 == scoreMax).ToList();
-            // pick ones w/ less remaining relations
-            pickingListScores = pickingListScores.OrderBy(pp => pp.Item1.Relations.Keys.Intersect(people).Count()).ToList();
+            // pick ones w/ less remaining relations + TODO : those with most constraints
+            // pickingListScores = pickingListScores.OrderBy(pp => pp.Item1.Relations.Keys.Intersect(people).Count()).ToList();
             return pickingListScores.FirstOrDefault().Item1;
         }
 

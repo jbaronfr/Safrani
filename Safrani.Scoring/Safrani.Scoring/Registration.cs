@@ -1,5 +1,6 @@
 ﻿using Safrani.Data;
 using Safrani.Model;
+using Safrani.Model.People;
 
 namespace Safrani.Scoring
 {

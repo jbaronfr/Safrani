@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Safrani.Model
+namespace Safrani.Model.Calculation
 {
     public partial class Mark {
         public static Mark Nope = new Mark(-1, 6);

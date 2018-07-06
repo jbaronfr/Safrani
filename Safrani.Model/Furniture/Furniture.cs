@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Safrani.Model
 {
-    public class Event
+    class Furniture
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }
